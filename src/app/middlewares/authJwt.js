@@ -1,17 +1,19 @@
 const jwt = require('jsonwebtoken')
-const config = require('../../config/auth')
+const config = process.env
 const db = require('../models')
 const User = db.user
 const Role = db.role
 
+
+
 verifyToken = (req,res,next) =>{
-    let token = req.headers['x-access-token']
+    let token = req.headers["x-access-token"];
 
-    if(!token){
-        return res.status(403).send({message: 'No token provided'})
-    }
+    // if(!token){
+    //    return res.render('login')
+    // }
 
-    jwt.verify(token, config.secret, (err,decoded)=>{
+    jwt.verify(token, config.TOKEN_KEY, (err,decoded)=>{
         if(err){
             return res.status(401).send({message:'Unauthorized!'})   
         }
@@ -82,6 +84,7 @@ const authJwt = {
     verifyToken,
     isAdmin,
     isModerator
+
 }
 
 module.exports = authJwt

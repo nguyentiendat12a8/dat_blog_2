@@ -1,0 +1,26 @@
+<form method= "POST" action="/login/api/auth/signup">
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" class="form-control" name="username" id="username">
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" class="form-control" placeholder="Enter email" name="email" id="email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" class="form-control" placeholder="Enter password" name="password" id="password">
+  </div>
+
+  <div class="form-group">
+    <label for="roles">role:</label>
+    <input type="text" class="form-control"  name="roles" id="roles">
+  </div>
+
+  <div class="form-group form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">signup</button>
+</form>

@@ -4,7 +4,9 @@ const methodOverride = require('method-override')
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const app = express();
-const port = 8000;
+const port = 8001;
+
+require('dotenv').config() 
 
 const route = require('./routes');
 
