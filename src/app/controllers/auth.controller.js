@@ -10,7 +10,9 @@ var bcrypt = require('bcryptjs')
 
 //const config = require('../../config/auth')
 const Config = process.env
-
+exports.login = (req,res) =>{
+    res.render('login')
+}
 exports.signup = (req,res) =>{
 
     const user = new User({
@@ -74,46 +76,42 @@ try{
 
     if (await (bcrypt.compareSync(password,user.password))){
         const token = jwt.sign({id: user._id}, Config.TOKEN_KEY,{
-            expiresIn: 86400
+            expiresIn: 60
         })
-    
-        var authorities = []
+        return res
+        .cookie('access_token',token,{
+            httpOnly: true,//cookie chi duoc set tu ben server
+            //secure: process.env.NODE_ENV === "production", //trinh duyet phai duoc ket noi bao mat https
+        })
+        .status(200)
+        .redirect('/')
 
+        //var authorities = []   
         //join data to diffirent colection .populate()
-        User.findOne().populate('roles').exec(function(err,user){
-            if(err){
-                return res.status(500).send({message: err})
-            }
-            authorities.push('ROLE_'+ user.roles[0].name.toUpperCase())
-            // for(let i = 0; i < user.roles.length; i++){
-            //     authorities.push('ROLE_'+ user.roles[i].name.toUpperCase())         
-            // }
-            res.status(200).send({
-                id: user._id,
-                username: user.username,
-                email: user.email,
-                roles: authorities,
-                accessToken: token
-            })
-        })
-       
+        // User.findOne().populate('roles').exec(function(err,user){
+        //     if(err){
+        //         return res.status(500).send({message: err})
+        //     }
+        //     authorities.push('ROLE_'+ user.roles[0].name.toUpperCase())
+        //     // for(let i = 0; i < user.roles.length; i++){
+        //     //     authorities.push('ROLE_'+ user.roles[i].name.toUpperCase())         
+        //     // }
+        //     res.status(200).send({
+        //         id: user._id,
+        //         username: user.username,
+        //         email: user.email,
+        //         roles: authorities,
+        //         accessToken: token
+        //     })
+        // })
+        //res.redirect('/')
     } else {
         res.status(400).send('Invalid Credentials, password')
     }
-    
-    // const passwordIsValid = await bcrypt.compareSync(password, user.password)
-    // if (!passwordIsValid){
-    //     res.status(401).send({message: 'Password is invalid'})
-    // }
-
-
-
 } catch(err) {
     console.log(err)
 }
     
-
-
     // User.findOne({
     //     username: req.body.username
     // })
@@ -157,3 +155,6 @@ try{
 
 }
 
+exports.logout = (req,res) =>{
+    return res.clearCookie('access_token').redirect('/')
+}

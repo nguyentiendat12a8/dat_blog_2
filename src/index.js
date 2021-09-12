@@ -6,6 +6,9 @@ const handlebars = require('express-handlebars');
 const app = express();
 const port = 8001;
 
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
 require('dotenv').config() 
 
 const route = require('./routes');

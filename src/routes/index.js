@@ -4,6 +4,7 @@ const coursesRouter = require('./courses');
 const meRouter = require('./me');
 const auth = require('./auth');
 const user = require('./user.routes');
+const controller = require('../app/controllers/auth.controller')
 
 function route(app) {
 
@@ -14,6 +15,8 @@ function route(app) {
         );
         next();
       });
+    app.get("/login", controller.login)
+    app.get("/logout", controller.logout)
     app.use('/news', newsRouter);
     app.use('/courses', coursesRouter);
     app.use('/me', meRouter);

@@ -7,11 +7,11 @@ const Role = db.role
 
 
 verifyToken = (req,res,next) =>{
-    let token = req.headers["x-access-token"];
-
-    // if(!token){
-    //    return res.render('login')
-    // }
+    //let token = req.body.token || req.query.token ||req.headers["x-access-token"];
+    const token = req.cookies.access_token
+    if(!token){
+       return res.send("khong co token")
+    }
 
     jwt.verify(token, config.TOKEN_KEY, (err,decoded)=>{
         if(err){
