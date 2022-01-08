@@ -16,15 +16,16 @@ const route = require('./routes');
 const db = require('./config/db');
 
 const cors = require('cors')
-var corsOptions = {
-    origin: 'http://localhost:8081'
-}
-app.use(cors(corsOptions))
+// var corsOptions = {
+//     origin: 'http://localhost:8081'
+// }
+//app.use(cors(corsOptions))
 
+app.use(cors());
 //connect to db
 db.connect();
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 //xu ly du lieu tu form submit len sv
 app.use(
@@ -58,5 +59,3 @@ route(app);
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
 });
-
-

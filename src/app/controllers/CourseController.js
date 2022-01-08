@@ -19,9 +19,9 @@ class CourseController {
             .catch(next);
     }
     //[GET] /course/create
-    create(req, res, next) {
-        res.render('courses/create');
-    }
+    // create(req, res, next) {
+    //     res.render('courses/create');
+    // }
 
     //[POST] /course/store
     store(req, res, next) {

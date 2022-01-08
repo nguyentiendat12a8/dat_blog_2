@@ -8,7 +8,7 @@ const courseController = require('../app/controllers/CourseController');
 const {authJwt} = require('../app/middlewares')
 
 
-router.get('/create', [authJwt.verifyToken],courseController.create);
+router.get('/create', [authJwt.verifyToken] );
 router.get('/:id/edit',[authJwt.verifyToken],courseController.edit);
 router.post('/store',[authJwt.verifyToken], catchHandler(courseController.store));
 router.put('/:id',[authJwt.verifyToken], courseController.update);

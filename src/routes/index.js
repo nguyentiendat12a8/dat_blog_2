@@ -6,6 +6,8 @@ const auth = require('./auth');
 const user = require('./user.routes');
 const controller = require('../app/controllers/auth.controller')
 
+const meController = require('../app/controllers/MeController');
+
 function route(app) {
 
     app.use(function(req, res, next) {
@@ -14,15 +16,16 @@ function route(app) {
           "x-access-token, Origin, Content-Type, Accept"
         );
         next();
-      });
-    app.get("/login", controller.login)
+      }); 
+    //app.post("/loginAuth", controller.signin)
     app.get("/logout", controller.logout)
     app.use('/news', newsRouter);
     app.use('/courses', coursesRouter);
     app.use('/me', meRouter);
-    app.use('/login',auth)
+    app.use('/auth',auth)
     app.use('/user',user)
     app.use('/', siteRouter);
+    
 
 }
 

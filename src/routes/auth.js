@@ -1,4 +1,4 @@
-const { verifySignUp } = require("../app/middlewares");
+const { verifySignUp, authJwt } = require("../app/middlewares");
 const controller = require("../app/controllers/auth.controller");
 const express = require('express');
 const router = express.Router();
@@ -6,7 +6,7 @@ const router = express.Router();
 
   router.post(
     
-    "/api/auth/signup",
+    "/signup",
     [
       verifySignUp.checkDuplicateUsernameOrEmail,
       verifySignUp.checkRolesExisted
@@ -16,8 +16,8 @@ const router = express.Router();
 
   
 
-  router.post("/api/auth/signin", controller.signin);
-
+  router.post("/signin", controller.signin);
+  router.post("/verifyToken",[authJwt.verifyToken, authJwt.isAdmin], controller.verifyToken);
 
   module.exports = router;
 

@@ -8,11 +8,12 @@ class MeController {
     storedCourses(req, res,next) {
         Promise.all([Course.find({}),Course.countDocumentsDeleted()])
             .then(([courses,deletedCount]) => 
-                
-                res.render('me/stored-courses', {
-                    deletedCount,
-                    courses: multipleMongooseToObject(courses)
-                }))
+                res.send({courses: multipleMongooseToObject(courses)})
+                // res.render('me/stored-courses', {
+                //     deletedCount,
+                //     courses: multipleMongooseToObject(courses)
+                // }
+                )
             
             .catch(()=>{})            
 }

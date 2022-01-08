@@ -9,8 +9,9 @@ const Role = db.role
 verifyToken = (req,res,next) =>{
     //let token = req.body.token || req.query.token ||req.headers["x-access-token"];
     const token = req.cookies.access_token
+    //const token = req.body.access_token
     if(!token){
-       return res.send("khong co token")
+       return res.status(401).send("chua duoc dang nhap")
     }
 
     jwt.verify(token, config.TOKEN_KEY, (err,decoded)=>{
@@ -18,6 +19,7 @@ verifyToken = (req,res,next) =>{
             return res.status(401).send({message:'Unauthorized!'})   
         }
         req.userId = decoded.id
+        res.json(token)
         next()
     })
 }
@@ -40,6 +42,7 @@ isAdmin = (req,res,next) =>{
             for(let i = 0; i < roles.length; i++){
                 if(roles[i].name ==='admin'){
                     next()
+                    return res.json(roles)
                     return
                 }
             }

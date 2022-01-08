@@ -16,19 +16,20 @@ checkDuplicateUsernameOrEmail = (req,res,next) =>{
             res.status(400).send({message:'Failed! username is already in use'})
             return
         }
-        User.findOne({
-            email : req.body.email
-        }).exec((err,user)=>{
-            if(err){
-                res.status(500).send({message: err})
-                return
-            }
-            if(user){
-                res.status(400).send({message:'failed! email is already in use'})
-                return
-            }
-            next()
-        })
+        // User.findOne({
+        //     email : req.body.email
+        // }).exec((err,user)=>{
+        //     if(err){
+        //         res.status(500).send({message: err})
+        //         return
+        //     }
+        //     if(user){
+        //         res.status(400).send({message:'failed! email is already in use'})
+        //         return
+        //     }
+        //     next()
+        // })
+        next()
     })
 }
 
