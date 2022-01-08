@@ -1,16 +1,10 @@
-
 const db = require('../models')
-const User = db.user
-const Role = db.role
-
 var jwt = require('jsonwebtoken')
 var bcrypt = require('bcryptjs')
-const { findById } = require('../models/course')
+const User = db.user
+const Role = db.role
+const config = process.env
 
-
-
-//const config = require('../../config/auth')
-const Config = process.env
 exports.login = (req, res) => {
     res.render('login')
 }
@@ -78,21 +72,20 @@ exports.signin = async (req, res, next) => {
         }
 
         if (await (bcrypt.compareSync(password, user.password))) {
-            const token = jwt.sign({ id: user._id }, Config.TOKEN_KEY, {
-                expiresIn: Config.tokenLife
+            const token = jwt.sign({ id: user._id }, config.TOKEN_KEY, {
+                expiresIn: config.tokenLife
             })
-            const refreshToken = jwt.sign({id: user._id}, Config.REFRESH_TOKEN_KEY,{
-                expiresIn: Config.refreshTokenLife
+            const refreshToken = jwt.sign({id: user._id}, config.REFRESH_TOKEN_KEY,{
+                expiresIn: config.RefreshTokenLife
             })
             const userRole = await Role.findById(user.roles).then(response =>{
                 return response.name 
             })
             return res.send({
-                token: token,
+                token,
+                refreshToken,
                 user: userRole
             })
-
-            
 
             // return res
             // .cookie('access_token',token, {

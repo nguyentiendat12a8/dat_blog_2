@@ -17,7 +17,9 @@ const router = express.Router();
   
 
   router.post("/signin", controller.signin);
-  router.post("/verifyToken",[authJwt.verifyToken, authJwt.isAdmin], controller.verifyToken);
+  router.get("/verifyToken",authJwt.verifyToken);
+
+  router.get("/verifyRefreshToken",authJwt.verifyRefreshToken);
 
   module.exports = router;
 
